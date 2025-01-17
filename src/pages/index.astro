@@ -3,5 +3,15 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base titre="Accueil">
-	<h1>Accueil</h1>
+	<div
+		class="container mx-auto mt-10 flex flex-col items-center md:flex-row justify-between"
+	>
+		<h1 class="text-red-800 font-extrabold text-6xl uppercase">Accueil</h1>
+
+		<img
+			src="/src/assets/icon/grenade-Photoroom.png"
+			alt="Image de grenade"
+			class="w-25 h-auto"
+		/>
+	</div>
 </Base>
