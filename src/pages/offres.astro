@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Card from "../components/Card.astro";
 
 const offres = [
     {
@@ -11,7 +12,7 @@ const offres = [
         nomMaison: "Beverly Springfield",
         prix: 2700,
         surface: 45,
-        imgUrl: "image1.png",
+        imgUrl: "affiche1.jpg",
     },
     {
         adresse: "2699 Green Valley, Highland Lake",
@@ -22,7 +23,7 @@ const offres = [
         nomMaison: "Palm Harbor",
         prix: 2095,
         surface: 42,
-        imgUrl: "image2.png",
+        imgUrl: "affiche2.jpg",
     },
     {
         adresse: "909 Woodland St, Michigan, IN",
@@ -33,26 +34,20 @@ const offres = [
         nomMaison: "Faulkner Ave",
         prix: 4550,
         surface: 80,
-        imgUrl: "image3.png",
+        imgUrl: "affiche3.jpg",
     },
 ];
 ---
 
 <Base titre="Offres">
-    <div
-        class="container mx-auto mt-10 flex flex-col items-center md:flex-row justify-between"
-    >
-        <h1 class="text-red-800 font-extrabold text-6xl uppercase mb-8">
+    <div class="container mx-auto mt-10">
+        <h1
+            class="text-red-800 font-extrabold text-6xl uppercase text-center mb-10"
+        >
             Offres
         </h1>
-        <ul>
-            {
-                offres.map((offre) => (
-                    <li key={offre.id} class="mb-4">
-                        {offre.nomMaison}
-                    </li>
-                ))
-            }
-        </ul>
+        <div class="flex flex-wrap justify-center gap-8">
+            {offres.map((offre) => <Card key={offre.id} {...offre} />)}
+        </div>
     </div>
 </Base>
