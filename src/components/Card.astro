@@ -1,13 +1,14 @@
 ---
 const { adresse, nomMaison, nbChambres, nbSdb, prix, surface, imgUrl } =
-    Astro.props;
+    Astro.props; 
+    console.log('imgUrl=', imgUrl);
 ---
 
 <div
     class="bg-zinc-100 text-stone-700 border border-stone-500 rounded-lg shadow-lg p-6 flex flex-col items-center w-80 h-96"
 >
     <img
-        src={`/src/assets/${imgUrl}`}
+        src={imgUrl}
         alt={nomMaison}
         class="w-full h-40 object-cover mb-4 rounded-md"
     />
