@@ -2,10 +2,9 @@
 import Base from "../layouts/Base.astro";
 import Card from "../components/Card.astro";
 import { allMaisons } from "../backend.mjs";
-const visible = true;
 
 const offres = await allMaisons ();
-console.log('offres =',offres);
+console.log('offres =', offres);
 ---
 
 <Base titre="Offres">
@@ -50,7 +49,8 @@ console.log('offres =',offres);
                 </button>
             </div>
 
-            <div :class="viewMode === 'grid' 
+            <div 
+                :class="viewMode === 'grid' 
                         ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' 
                         : 'flex flex-col gap-4'">
                 
