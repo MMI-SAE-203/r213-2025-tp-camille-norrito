@@ -5,9 +5,11 @@ const pb = new PocketBase('http://127.0.0.1:8090');
 
 export async function allMaisons() {
     let records = await pb.collection('Maisons').getFullList();
+    console.log("records all maison", records);
+
     records = records.map((maison) => {
-        maison.imgUrl = pb.files.getURL(maison, maison.images[0]); 
-        console.log ('maison on veut afficher url',maison.imgUrl)
+        maison.imgUrl = pb.files.getURL(maison, maison.images[0]);
+        console.log('maison on veut afficher url', maison.imgUrl)
         return maison;
     });
     return records;
