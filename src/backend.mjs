@@ -36,8 +36,9 @@ export async function allMaisonsSorted() {
 }
 
 export async function bySurface(surface) {
+    console.log("ici dans bySurface :", surface)
     const records = await pb.collection('Maisons').getFullList({
-        filter: `surface > ${surface}`
+        filter: `surface >= ${surface}`
     });
     return records;
 }
