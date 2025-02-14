@@ -1,0 +1,38 @@
+---
+import { addOffre } from "../../backend.mjs";
+import Base from "../../layouts/Base.astro";
+
+let message = "";
+if (Astro.request.method === "POST") {
+    const formData = await Astro.request.formData();
+    const response = await addOffre(formData);
+    message = response.message;
+}
+---
+
+<Base>
+    <h1 class="text-lg">Ajouter une offre</h1>
+    <form action="/offres/add" method="POST" enctype="multipart/form-data">
+        <input
+            type="text"
+            name="nomMaison"
+            placeholder="Nom de la maison"
+            required
+            class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        />
+        <input type="number" name="prix" placeholder="Prix" />
+        <input
+            type="number"
+            name="nbSdb"
+            placeholder="Nombre de salles de bain"
+        />
+        <input
+            type="number"
+            name="nbChambres"
+            placeholder="Nombre de chambres"
+        />
+        <input type="number" name="surface" placeholder="Superficie" />
+        <input type="file" name="images" />
+        <button type="submit">Ajouter</button>
+    </form>
+</Base>
