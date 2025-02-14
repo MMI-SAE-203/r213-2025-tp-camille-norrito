@@ -4,6 +4,7 @@ import Base from "../../layouts/Base.astro";
 
 let message = "";
 if (Astro.request.method === "POST") {
+
     const formData = await Astro.request.formData();
     const response = await addOffre(formData);
     message = response.message;

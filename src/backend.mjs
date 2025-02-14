@@ -5,11 +5,9 @@ const pb = new PocketBase('http://127.0.0.1:8090');
 
 export async function allMaisons() {
     let records = await pb.collection('Maisons').getFullList();
-    console.log("records all maison", records);
 
     records = records.map((maison) => {
         maison.imgUrl = pb.files.getURL(maison, maison.images[0]);
-        console.log('maison on veut afficher url', maison.imgUrl)
         return maison;
     });
     return records;
@@ -68,7 +66,7 @@ export async function getOffre(id) {
 
 export async function addOffre(house) {
     try {
-        await pb.collection('maison').create(house);
+        await pb.collection('Maisons').create(house);
         return {
             success: true,
             message: 'Offre ajoutée avec succès'
@@ -79,5 +77,22 @@ export async function addOffre(house) {
             success: false,
             message: 'Une erreur est survenue en ajoutant la maison'
         };
+    }
+}
+
+export async function filterByPrix(prixMin, prixMax) {
+    try {
+        let data = await pb.collection('Maisons').getFullList({
+            sort: '-created',
+            filter: `prix >= ${prixMin} && prix <= ${prixMax}`
+        });
+        data = data.map((maison) => {
+            maison.imgUrl = pb.files.getURL(maison, maison.images[0]);
+            return maison;
+        });
+        return data;
+    } catch (error) {
+        console.log('Une erreur est survenue en filtrant la liste des maisons', error);
+        return [];
     }
 }
