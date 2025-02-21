@@ -1,22 +1,52 @@
 ---
-const { nomMaison, imgUrl } = Astro.props;
+import { setFavori } from "../backend.mjs";
 
-const { ...offre } = Astro.props;
+const { nomMaison, imgUrl, ...offre } = Astro.props;
 ---
 
 <div
-    class="bg-zinc-100 text-stone-700 border border-stone-500 rounded-lg shadow-lg p-6 flex flex-col items-center w-80"
+    class="bg-zinc-100 text-stone-700 border border-stone-500 rounded-lg shadow-lg p-6 flex flex-col items-center w-80 relative"
+    x-data={`{
+        favori: ${offre.favori}, 
+        clickFavori() {
+            this.favori = !this.favori;
+            setFavori(${JSON.stringify(offre)});
+        }
+    }`}
 >
+    <!-- Image de la maison -->
     <img
         src={imgUrl}
         alt={nomMaison}
         class="w-full h-40 object-cover mb-4 rounded-md"
     />
+
+    <!-- Nom de la maison -->
     <h2 class="text-2xl font-bold text-center">{nomMaison}</h2>
 
+    <!-- Bouton Favori avec icône qui change dynamiquement -->
+    <button
+        class="absolute bottom-0 left-0 p-6 text-white rounded-br-lg"
+        @click="clickFavori"
+    >
+        <img
+            :src="favori ? 'public/favorite-mignon2.png' : 'public/favorite-mignon.png'"
+            alt="Favorite Icon"
+            class="w-10 h-10"
+        />
+    </button>
+
+    <!-- Bouton Voir plus -->
     <a
         href={`/offres/${offre.id}`}
         class="mt-4 inline-block bg-blue-400 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-        >Voir plus</a
     >
+        Voir plus
+    </a>
 </div>
+
+<script>
+    //@ts-nocheck
+    import { setFavori } from "../backend.mjs";
+    window.setFavori = setFavori;
+</script>

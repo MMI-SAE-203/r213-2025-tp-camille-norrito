@@ -96,3 +96,30 @@ export async function filterByPrix(prixMin, prixMax) {
         return [];
     }
 }
+
+export async function getAllAgents() {
+    return await pb.collection("Agent").getFullList();
+}
+
+export async function getAgentById(id) {
+    return await pb.collection("Agent").getOne(id);
+}
+
+
+export async function getOffresByAgent(agentEmail) {
+    return await pb.collection("Maisons").getFullList({
+        filter: `agent = "${agentEmail}"`,
+    });
+}
+
+export async function setFavori(house) {
+    try {
+        const updatedHouse = await pb.collection("Maisons").update(house.id, {
+            favori: !house.favori
+        });
+        console.log(`Favori mis à jour pour la maison : ${house.id}`);
+        return updatedHouse;
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour du favori :", error);
+    }
+}

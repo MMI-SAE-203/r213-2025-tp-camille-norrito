@@ -1,0 +1,28 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getAgentById, getOffresByAgent } from "../../backend.mjs";
+
+const { id } = Astro.params;
+
+const agent = await getAgentById(id);
+const offres = await getOffresByAgent(id);
+---
+
+<Base>
+    <div class="container mx-auto px-4 py-10">
+        <h1 class="text-3xl font-bold mb-6">{agent.nom} {agent.prenom}</h1>
+        <p class="text-gray-600">Email: {agent.email}</p>
+
+        <h2 class="text-2xl font-bold mt-6">Offres de {agent.nom}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            {
+                offres.map((offre) => (
+                    <div class="border p-4 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold">{offre.nom}</h3>
+                        <p class="text-gray-600">{offre.prix}€</p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Base>
