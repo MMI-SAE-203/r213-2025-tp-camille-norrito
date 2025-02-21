@@ -44,7 +44,7 @@ if (Astro.request.method === "POST") {
 
         <div x-data="{ showFavorites: false, viewMode: 'grid' }" class="text-center">
             
-            <div class="mb-6 flex justify-center gap-4">
+            <div class="mb-6 flex justify-center gap-4 pt-6">
                 <button
                     @click="showFavorites = false"
                     :class="!showFavorites ? 'bg-blue-400' : 'bg-slate-400'"
@@ -83,7 +83,7 @@ if (Astro.request.method === "POST") {
                 </button>
             </div>
 
-            <form action="/offres" method="POST">
+            <form action="/offres" method="POST" class="mb-10">
                 <input type="number" name="minPrix" placeholder="Prix minimum" />
                 <input type="number" name="maxPrix" placeholder="Prix maximum" />
                 <input type="submit" value="Filtrer par prix" />

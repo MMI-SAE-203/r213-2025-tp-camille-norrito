@@ -1,12 +1,70 @@
 ---
 import Base from "../layouts/Base.astro";
+import { allMaisonsFavori } from "../backend.mjs";
+
+const favorites = await allMaisonsFavori();
+
+console.log("Maisons favorites :", favorites);
 ---
 
 <Base titre="Accueil">
-	<div
-		class="container mx-auto mt-10 flex flex-col items-center md:flex-row justify-between"
-	>
-		<h1 class="text-red-800 font-extrabold text-6xl uppercase">Accueil</h1>
+    <div class="container mx-auto mt-10 flex flex-col items-center md:flex-row justify-between">
+        <h1 class="text-red-800 font-extrabold text-6xl uppercase">Accueil</h1>
+    </div>
 
-	</div>
+    
+    <div class="container mx-auto px-4 py-10">
+        <h2 class="text-3xl font-bold mb-6 text-center"> Maisons Favorites</h2>
+
+        {favorites.length > 0 ? (
+            <div class="relative w-full max-w-4xl mx-auto overflow-hidden">
+                <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
+                    {favorites.map((maison) => (
+                        <div class="min-w-full p-4">
+                            <div class="bg-white shadow-lg rounded-lg p-4">
+                                <img src={maison.imgUrl} alt={maison.nom} class="w-full h-40 object-cover rounded-md mb-2" />
+                                <h2 class="text-lg font-bold">{maison.nom}</h2>
+                                <p class="text-gray-600">{maison.address}</p>
+                                <a href={`/offres/${maison.id}`} class="mt-2 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg">
+                                    Voir plus
+                                </a>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                
+                <button id="prev" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"><=</button>
+                <button id="next" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">=></button>
+            </div>
+        ) : (
+            <p class="text-gray-500 text-center">Aucune maison favorite pour l'instant.</p>
+        )}
+    </div>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const carousel = document.getElementById("carousel");
+            const prevButton = document.getElementById("prev");
+            const nextButton = document.getElementById("next");
+
+            let index = 0;
+            const totalSlides = carousel.children.length;
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${index * 100}%)`;
+            }
+
+            nextButton.addEventListener("click", () => {
+                index = (index + 1) % totalSlides;
+                updateCarousel();
+            });
+
+            prevButton.addEventListener("click", () => {
+                index = (index - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            });
+        });
+    </script>
 </Base>

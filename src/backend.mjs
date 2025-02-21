@@ -26,6 +26,7 @@ export async function allMaisonsFavori() {
     return records;
 }
 
+
 export async function allMaisonsSorted() {
     const records = await pb.collection('Maisons').getFullList({
         sort: 'prix'
